@@ -1,0 +1,27 @@
+<html>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="cycle-select.js"></script>
+    <script>
+    $(document).ready(function() {
+  $(".cycle-select")
+    .cycleSelect({
+      delay: 1000
+    })
+    .change(function(evt) {
+      console.log($(evt.target).val());
+    });
+});
+</script>
+  <select class="cycle-select">
+    <option value ="1">one</option>
+    <option value ="2">two</option>
+    <option value ="3">three</option>
+  </select>
+  <select class="cycle-select">
+    <option value ="1">one</option>
+    <option value ="2" selected>two</option>
+    <option value ="3">three</option>
+  </select>
+  </body>
+</html>
