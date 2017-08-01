@@ -3,19 +3,22 @@
   jQuery.fn.cycleSelect = function(opts) {
     // Delay from the last click to changing the select and firing the change element
     var delay = opts.delay || 0;
+    var classAttribute = opts.classAttribute || "data-cycle-class";
 
     // Apply it to every element in the selector
     this.map(function(index, select) {
-      var clickElement = $("<a href='#'>val</a>");
+      var clickElement = $("<a>val</a>");
 
       // Hide the source select
       $(select).before(clickElement).hide();
       var value = $(select).val();
+      var currentOption = $(select).children(`option[value='${value}']`);
 
       // Add CSS classes for styling
       // Then make the value match the select's
       $(clickElement)
         .addClass("select-cycle")
+        .addClass($(currentOption).attr(classAttribute))
         .attr("data-value", value)
         .html($(select).children(`option[value='${value}']`).html());
 
@@ -32,7 +35,11 @@
 
         value = $(nextOption).attr("value");
 
-        $(clickElement).attr("data-value", value).html($(nextOption).html());
+        $(clickElement)
+          .attr("data-value", value)
+          .html($(nextOption).html())
+          .removeClass($(currentOption).attr(classAttribute))
+          .addClass($(nextOption).attr(classAttribute));
 
         // Reset timer
         var timeout = $(clickElement).attr("data-timeout-id");
